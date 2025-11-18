@@ -1,3 +1,5 @@
+from idlelib.run import StdOutputFile
+
 from database.regione_DAO import RegioneDAO
 from database.tour_DAO import TourDAO
 from database.attrazione_DAO import AttrazioneDAO
@@ -38,6 +40,14 @@ class Model:
             --> Ogni Tour ha un set di Attrazione.
             --> Ogni Attrazione ha un set di Tour.
         """
+        lista_relazione = TourDAO.get_tour_attrazioni() # relazione N:N [id_tour | id_attrazione ]
+
+        for rel in lista_relazione:
+            self.tour_map[rel['id_tour']].attrazione.add(rel['id_attrazione'])
+            self.attrazioni_map[rel['id_attrazione']].tour.add(rel['id_tour'])
+
+
+
 
         # TODO
 
